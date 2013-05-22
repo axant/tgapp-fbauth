@@ -80,6 +80,11 @@ class RootController(TGController):
                                                                                             facebook_id)),
                            password=token)
         DBSession.add(u)
+
+        hooks = config['hooks'].get('fbauth.on_registration', [])
+        for func in hooks:
+            func(answer, u)
+
         fbi = model.FBAuthInfo(user=u, facebook_id=facebook_id, registered=True, just_connected=True,
                                access_token=token, access_token_expiry=expiry,
                                profile_picture='http://graph.facebook.com/%s/picture' % facebook_id)

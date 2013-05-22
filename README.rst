@@ -103,6 +103,14 @@ your users log into your application using FaceBook Connect:
         The ``scope`` parameter is the permissions that the application will ask to facebook.
         By default those are only user data and email.
 
+Available Hooks
+----------------------
+
+FBAuth exposes some hooks to alter its behavior, 
+the hooks that can be used with TurboGears2 *register_hook* are:
+
+    * **fbauth.on_registration(facebook_data, user)** -> Runs when it is registering a new user from facebook login, permits to add additional data to the user.
+
 FBAuth Utilities
 ------------------
 
