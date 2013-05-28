@@ -21,14 +21,14 @@ except IOError:
 
 setup(
     name='tgapp-fbauth',
-    version='0.0.2',
+    version='0.0.3',
     description='Facebook Authentication for TurboGears2',
     long_description=README,
     author='Alessandro Molina',
     author_email='alessandro.molina@axant.it',
     url='http://bitbucket.org/_amol_/tgapp-fbauth',
     keywords='turbogears2.application',
-    setup_requires=["PasteScript >= 1.7"],
+    setup_requires=[],
     paster_plugins=[],
     packages=find_packages(exclude=['ez_setup']),
     install_requires=install_requires,
@@ -39,7 +39,6 @@ setup(
     entry_points="""
     """,
     dependency_links=[
-        "http://tg.gy/current/"
         ],
     zip_safe=False
 )
