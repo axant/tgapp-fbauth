@@ -27,13 +27,13 @@ def _fb_init(appid, html, script):
 
     return html, script
 
-def login_button(appid, text='Login with Facebook', scope=None, remember=''):
+def login_button(appid, text='Login with Facebook', scope=None, remember='', size='medium'):
     if not scope:
         scope = "user_about_me,email"
 
-    html = '''<div class="fb-login-button" data-width="100" scope="%(scope)s" onlogin="fbauth_login()">
+    html = '''<div class="fb-login-button" scope="%(scope)s" size="%(size)s" onlogin="fbauth_login()">
                 %(text)s
-              </div>''' % dict(text=text, scope=scope)
+              </div>''' % dict(text=text, scope=scope, size=size)
 
     script = '''<script>
 function fbauth_login() {
@@ -53,13 +53,13 @@ function fbauth_login() {
     html, script = _fb_init(appid, html, script)
     return Markup(html + script)
 
-def register_button(appid, text='Register with Facebook', scope=None, remember=''):
+def register_button(appid, text='Register with Facebook', scope=None, remember='', size='medium'):
     if not scope:
         scope = "user_about_me,email"
 
-    html = '''<div class="fb-login-button" scope="%(scope)s" onlogin="fbauth_register()">
+    html = '''<div class="fb-login-button" scope="%(scope)s" size="%(size)s" onlogin="fbauth_register()">
                 %(text)s
-              </div>''' % dict(text=text, scope=scope)
+              </div>''' % dict(text=text, scope=scope, size=size)
 
     script = '''<script>
 function fbauth_register() {
@@ -79,13 +79,13 @@ function fbauth_register() {
     html, script = _fb_init(appid, html, script)
     return Markup(html + script)
 
-def connect_button(appid, text='Connect your Facebook account', scope=None):
+def connect_button(appid, text='Connect your Facebook account', scope=None, size='medium'):
     if not scope:
         scope = "user_about_me,email"
 
-    html = '''<div class="fb-login-button" scope="%(scope)s" onlogin="fbauth_connect()">
+    html = '''<div class="fb-login-button" scope="%(scope)s" size="%(size)s" onlogin="fbauth_connect()">
                 %(text)s
-              </div>''' % dict(text=text, scope=scope)
+              </div>''' % dict(text=text, scope=scope, size=size)
 
     script = '''<script>
 function fbauth_connect() {

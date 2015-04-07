@@ -46,7 +46,7 @@ fbauth provides a bunch of helpers which will automatically
 generate the buttons and the javascript required to let
 your users log into your application using FaceBook Connect:
 
-     * **h.fbauth.login_button(appid, text='Login with Facebook', scope=None, remember='')**
+     * **h.fbauth.login_button(appid, text='Login with Facebook', scope=None, remember='', size='medium')**
         Places a login button.
         Login permits to log with an user that has already been connected with a facebook id.
         To connect an user to a facebook id, *registration* or *connect* can be used.
@@ -62,7 +62,9 @@ your users log into your application using FaceBook Connect:
         The ``remember`` parameter can be used to log the user with an expiration date instead
         of using a session cookie, so that the session can last longer than the browser tab life.
 
-     * **h.fbauth.register_button(appid, text='Register with Facebook', scope=None, remember='')**
+        The ``size`` parameter can be used to choose size of facebook login button. You can use : small, medium, large or xlarge.
+
+     * **h.fbauth.register_button(appid, text='Register with Facebook', scope=None, remember='', size='medium')**
         Places a registration button.
         Registration automatically creates a new user from its facebook data and logs him in.
         *For registration to work it is required that any additional data apart the data which
@@ -87,7 +89,9 @@ your users log into your application using FaceBook Connect:
         The ``remember`` parameter can be used to log the user with an expiration date instead
         of using a session cookie, so that the session can last longer than the browser tab life.
 
-     * **h.fbauth.connect_button(appid, text='Connect your Facebook account', scope=None)**
+        The ``size`` parameter can be used to choose size of facebook register button. You can use : small, medium, large or xlarge.
+
+     * **h.fbauth.connect_button(appid, text='Connect your Facebook account', scope=None, size='medium')**
         Places a connect account button.
         Connect permits to associate an already existing user to a facebook account so that
         it can later log with its facebook account.
@@ -102,6 +106,8 @@ your users log into your application using FaceBook Connect:
 
         The ``scope`` parameter is the permissions that the application will ask to facebook.
         By default those are only user data and email.
+
+        The ``size`` parameter can be used to choose size of facebook login button. You can use : small, medium, large or xlarge.
 
 Available Hooks
 ----------------------
