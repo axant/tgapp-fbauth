@@ -25,7 +25,7 @@ class RootController(TGController):
     def login(self, token, expiry, came_from=None, remember=None):
         token, expiry = validate_token(token, expiry)
 
-        fbanswer = urlopen('https://graph.facebook.com/me?access_token=%s' % token)
+        fbanswer = urlopen('https://graph.facebook.com/v2.3/me?access_token=%s' % token)
         try:
             answer = json.loads(fbanswer.read())
             facebook_id = answer['id']
@@ -52,7 +52,7 @@ class RootController(TGController):
     def register(self, token, expiry, came_from=None, remember=None):
         token, expiry = validate_token(token, expiry)
 
-        fbanswer = urlopen('https://graph.facebook.com/me?access_token=%s' % token)
+        fbanswer = urlopen('https://graph.facebook.com/v2.3/me?access_token=%s' % token)
         try:
             answer = json.loads(fbanswer.read())
             facebook_id = answer['id']
@@ -87,7 +87,7 @@ class RootController(TGController):
 
         fbi = model.FBAuthInfo(user=u, facebook_id=facebook_id, registered=True, just_connected=True,
                                access_token=token, access_token_expiry=expiry,
-                               profile_picture='http://graph.facebook.com/%s/picture' % facebook_id)
+                               profile_picture='http://graph.facebook.com/v2.3/%s/picture' % facebook_id)
         DBSession.add(fbi)
 
         login_user(u.user_name, remember)
@@ -106,7 +106,7 @@ class RootController(TGController):
 
         token, expiry = validate_token(token, expiry)
 
-        fbanswer = urlopen('https://graph.facebook.com/me?access_token=%s' % token)
+        fbanswer = urlopen('https://graph.facebook.com/v2.3/me?access_token=%s' % token)
         try:
             answer = json.loads(fbanswer.read())
             facebook_id = answer['id']
@@ -124,7 +124,7 @@ class RootController(TGController):
         u = request.identity['user']
         fbi = model.FBAuthInfo(user=u, facebook_id=facebook_id, registered=False, just_connected=True,
                                access_token=token, access_token_expiry=expiry,
-                               profile_picture='http://graph.facebook.com/%s/picture' % facebook_id)
+                               profile_picture='http://graph.facebook.com/v2.3/%s/picture' % facebook_id)
         DBSession.add(fbi)
         return redirect(came_from)
 
