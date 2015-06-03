@@ -21,7 +21,7 @@ except IOError:
 
 setup(
     name='tgapp-fbauth',
-    version='0.0.4',
+    version='0.0.5',
     description='Facebook Authentication for TurboGears2',
     long_description=README,
     author='Alessandro Molina',
