@@ -2,7 +2,8 @@
 """Main Controller"""
 
 from tg import TGController
-from tg import expose, flash, require, url, lurl, request, redirect, validate, config, require
+from tg import expose, flash, require, url, lurl, request, redirect, validate, config, require, \
+    hooks
 from tg.i18n import ugettext as _, lazy_ugettext as l_
 
 try:
@@ -80,10 +81,7 @@ class RootController(TGController):
                                                                                             facebook_id)),
                            password=token)
         DBSession.add(u)
-
-        hooks = config['hooks'].get('fbauth.on_registration', [])
-        for func in hooks:
-            func(answer, u)
+        hooks.notify('fbauth.on_registration', args=(answer, u))
 
         fbi = model.FBAuthInfo(user=u, facebook_id=facebook_id, registered=True, just_connected=True,
                                access_token=token, access_token_expiry=expiry,

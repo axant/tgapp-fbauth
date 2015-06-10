@@ -9,7 +9,7 @@ except ImportError:
     from setuptools import setup, find_packages
 
 install_requires=[
-    "TurboGears2 >= 2.1.5",
+    "TurboGears2 >= 2.3.0",
     "tgext.pluggable"
 ]
 
@@ -21,12 +21,12 @@ except IOError:
 
 setup(
     name='tgapp-fbauth',
-    version='0.0.5',
+    version='0.1.0',
     description='Facebook Authentication for TurboGears2',
     long_description=README,
-    author='Alessandro Molina',
-    author_email='alessandro.molina@axant.it',
-    url='http://bitbucket.org/_amol_/tgapp-fbauth',
+    author='AXANT',
+    author_email='tech@axant.it',
+    url='http://bitbucket.org/axant/tgapp-fbauth',
     keywords='turbogears2.application',
     setup_requires=[],
     paster_plugins=[],
