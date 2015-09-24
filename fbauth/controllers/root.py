@@ -42,6 +42,8 @@ class RootController(TGController):
             return redirect_on_fail()
 
         login_user(user.user_name, remember)
+        hooks.notify('fbauth.on_login', args=(answer, user))
+
         if has_fbtoken_expired(user):
             user.fbauth.access_token = token
             user.fbauth.access_token_expiry = expiry
@@ -70,6 +72,8 @@ class RootController(TGController):
             if has_fbtoken_expired(user):
                 user.fbauth.access_token = token
                 user.fbauth.access_token_expiry = expiry
+
+            hooks.notify('fbauth.on_login', args=(answer, user))
             redirect_to = add_param_to_query_string(config.sa_auth['post_login_url'], 'came_from', came_from)
             return redirect(redirect_to)
 

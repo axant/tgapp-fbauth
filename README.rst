@@ -179,6 +179,7 @@ FBAuth exposes some hooks to alter its behavior,
 the hooks that can be used with TurboGears2 *register_hook* are:
 
     * **fbauth.on_registration(facebook_data, user)** -> Runs when it is registering a new user from facebook login, permits to add additional data to the user.
+    * **fbauth.on_login(facebook_data, user)** -> Runs when it is logging in from facebook, permits to update/add additional data to the user.
 
 FBAuth Utilities
 ------------------
