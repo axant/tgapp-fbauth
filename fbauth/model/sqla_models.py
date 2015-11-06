@@ -2,8 +2,11 @@ from sqlalchemy import Table, ForeignKey, Column
 from sqlalchemy.types import Unicode, Integer, DateTime, Boolean, String
 from sqlalchemy.orm import backref, relation
 
-from fbauth.model import DeclarativeBase, DBSession
+from fbauth.model import DBSession
 from tgext.pluggable import app_model, primary_key
+from sqlalchemy.ext.declarative import declarative_base
+
+DeclarativeBase = declarative_base()
 
 class FBAuthInfo(DeclarativeBase):
     __tablename__ = 'fbauth_info'
@@ -22,8 +25,8 @@ class FBAuthInfo(DeclarativeBase):
 
     @classmethod
     def user_by_facebook_id(cls, facebook_id):
-        fbauth = DBSession.query(cls).filter_by(facebook_id=facebook_id).first()
-        if not fbauth:
-            return None
-        return fbauth.user
+        return DBSession.query(cls).filter_by(facebook_id=facebook_id).first()
 
+    @classmethod
+    def fbauth_user(cls, user_id):
+        return cls.query.find({'user_id': user_id}).first()

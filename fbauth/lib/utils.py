@@ -19,6 +19,7 @@ def validate_token(token, expiry):
 
     return token, expiry
 
+
 def login_user(user_name, expire=None):
     request = tg.request
     response = tg.response
@@ -34,11 +35,9 @@ def login_user(user_name, expire=None):
     if not request.environ.get('repoze.who.identity'):
         response.headers = identifier.remember(request.environ, login_options)
 
-def has_fbtoken_expired(user):
-    if not user.fbauth:
-        return True
 
-    expire = user.fbauth.access_token_expiry
+def has_fbtoken_expired(user):
+    expire = user.access_token_expiry
     if not expire:
         return True
 
@@ -47,12 +46,14 @@ def has_fbtoken_expired(user):
 
     return False
 
+
 def expirydate_from_sec(seconds):
     seconds -= 3
     if seconds <= 0:
         raise ValueError('Facebook token already expired')
 
     return datetime.now() + timedelta(seconds=seconds)
+
 
 def add_param_to_query_string(url, param, value):
     url_parts = list(urlparse(url))

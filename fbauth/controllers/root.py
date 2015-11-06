@@ -14,12 +14,12 @@ except ImportError:
 from tgext.pluggable import app_model
 
 from fbauth import model
-from fbauth.model import DBSession
 from fbauth.lib.utils import (login_user, has_fbtoken_expired, validate_token,
                               add_param_to_query_string, redirect_on_fail)
 
 import json
 from urllib import urlopen
+
 
 class RootController(TGController):
     @expose()
@@ -36,17 +36,18 @@ class RootController(TGController):
         finally:
             fbanswer.close()
 
-        user = model.FBAuthInfo.user_by_facebook_id(facebook_id)
-        if not user:
+        fb_user = model.FBAuthInfo.user_by_facebook_id(facebook_id)
+
+        if not fb_user:
             flash(_('Unable to find an user for the specified facebook token'), 'error')
             return redirect_on_fail()
 
-        login_user(user.user_name, remember)
-        hooks.notify('fbauth.on_login', args=(answer, user))
+        login_user(fb_user.user.user_name, remember)
+        hooks.notify('fbauth.on_login', args=(answer, fb_user))
 
-        if has_fbtoken_expired(user):
-            user.fbauth.access_token = token
-            user.fbauth.access_token_expiry = expiry
+        if has_fbtoken_expired(fb_user):
+            fb_user.access_token = token
+            fb_user.access_token_expiry = expiry
 
         redirect_to = add_param_to_query_string(config.sa_auth['post_login_url'], 'came_from', came_from)
         return redirect(redirect_to)
@@ -65,37 +66,44 @@ class RootController(TGController):
         finally:
             fbanswer.close()
 
-        user = model.FBAuthInfo.user_by_facebook_id(facebook_id)
-        if user:
-            #If the user already exists, just login him.
-            login_user(user.user_name, remember)
-            if has_fbtoken_expired(user):
-                user.fbauth.access_token = token
-                user.fbauth.access_token_expiry = expiry
+        fb_user = model.FBAuthInfo.user_by_facebook_id(facebook_id)
 
-            hooks.notify('fbauth.on_login', args=(answer, user))
+        if fb_user:
+            #If the user already exists, just login him.
+            login_user(fb_user.user.user_name, remember)
+            if has_fbtoken_expired(fb_user):
+                fb_user.access_token = token
+                fb_user.access_token_expiry = expiry
+
+            hooks.notify('fbauth.on_login', args=(answer, fb_user))
             redirect_to = add_param_to_query_string(config.sa_auth['post_login_url'], 'came_from', came_from)
             return redirect(redirect_to)
 
-        u = app_model.User(user_name='fb:%s' % facebook_id,
-                           display_name=answer.get('name',
-                                                   answer.get('username',
-                                                              answer.get('first_name', 'Anonymous'))),
-                           email_address=answer.get('email', '%s@facebook.com' % answer.get('username',
-                                                                                            facebook_id)),
-                           password=token)
-        DBSession.add(u)
-        hooks.notify('fbauth.on_registration', args=(answer, u))
+        user_dict = dict(
+            user_name='fb:%s' % facebook_id,
+            display_name=answer.get('name', answer.get('username', answer.get('first_name', 'Anonymous'))),
+            email_address=answer.get('email', '%s@facebook.com' % answer.get('username', facebook_id)),
+            password=token
+        )
+        hooks.notify('fbauth.on_registration', args=(answer, user_dict))
 
-        fbi = model.FBAuthInfo(user=u, facebook_id=facebook_id, registered=True, just_connected=True,
-                               access_token=token, access_token_expiry=expiry,
-                               profile_picture='http://graph.facebook.com/v2.3/%s/picture' % facebook_id)
-        DBSession.add(fbi)
+        u = model.provider.create(app_model.User, user_dict)
+
+        fbi_dict = dict(
+            user=u,
+            facebook_id=facebook_id,
+            registered=True,
+            just_connected=True,
+            access_token=token,
+            access_token_expiry=expiry,
+            profile_picture='http://graph.facebook.com/v2.3/%s/picture' % facebook_id
+        )
+        fbi_user = model.provider.create(model.FBAuthInfo, fbi_dict)
 
         login_user(u.user_name, remember)
-        if has_fbtoken_expired(u):
-            u.fbauth.access_token = token
-            u.fbauth.access_token_expiry = expiry
+        if has_fbtoken_expired(fbi_user):
+            fbi_user.access_token = token
+            fbi_user.access_token_expiry = expiry
 
         redirect_to = add_param_to_query_string(config.sa_auth['post_login_url'], 'came_from', came_from)
         return redirect(redirect_to)
@@ -118,15 +126,22 @@ class RootController(TGController):
         finally:
             fbanswer.close()
 
-        user = model.FBAuthInfo.user_by_facebook_id(facebook_id)
-        if user:
+        fb_user = model.FBAuthInfo.user_by_facebook_id(facebook_id)
+        if fb_user:
             flash(_('An user for this facebook token is already registered'), 'error')
             return redirect(came_from)
 
         u = request.identity['user']
-        fbi = model.FBAuthInfo(user=u, facebook_id=facebook_id, registered=False, just_connected=True,
-                               access_token=token, access_token_expiry=expiry,
-                               profile_picture='http://graph.facebook.com/v2.3/%s/picture' % facebook_id)
-        DBSession.add(fbi)
-        return redirect(came_from)
+        fbi_dict = dict(
+            user=u,
+            facebook_id=facebook_id,
+            registered=False,
+            just_connected=True,
+            access_token=token,
+            access_token_expiry=expiry,
+            profile_picture='http://graph.facebook.com/v2.3/%s/picture' % facebook_id
+        )
 
+        model.provider.create(model.FBAuthInfo, fbi_dict)
+
+        return redirect(came_from)
