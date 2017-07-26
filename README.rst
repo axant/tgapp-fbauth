@@ -46,7 +46,7 @@ fbauth provides a bunch of helpers which will automatically
 generate the buttons and the javascript required to let
 your users log into your application using FaceBook Connect:
 
-     * **h.fbauth.login_button(appid, text='Login with Facebook', scope=None, remember='', size='medium')**
+* **h.fbauth.login_button(appid, text='Login with Facebook', scope=None, remember='', size='medium')**
         Places a login button.
         Login permits to log with an user that has already been connected with a facebook id.
         To connect an user to a facebook id, *registration* or *connect* can be used.
@@ -64,7 +64,7 @@ your users log into your application using FaceBook Connect:
 
         The ``size`` parameter can be used to choose size of facebook login button. You can use : small, medium, large or xlarge.
 
-     * **h.fbauth.login_button_custom(appid, text='Login with Facebook', scope=None, remember='', img_btn='')**
+* **h.fbauth.login_button_custom(appid, text='Login with Facebook', scope=None, remember='', img_btn='')**
         Places a login button with custom image.
         Login permits to log with an user that has already been connected with a facebook id.
         To connect an user to a facebook id, *registration* or *connect* can be used.
@@ -82,7 +82,7 @@ your users log into your application using FaceBook Connect:
 
         The ``img_btn`` parameter specific custom url image button.
 
-     * **h.fbauth.register_button(appid, text='Register with Facebook', scope=None, remember='', size='medium')**
+* **h.fbauth.register_button(appid, text='Register with Facebook', scope=None, remember='', size='medium')**
         Places a registration button.
         Registration automatically creates a new user from its facebook data and logs him in.
         *For registration to work it is required that any additional data apart the data which
@@ -109,7 +109,7 @@ your users log into your application using FaceBook Connect:
 
         The ``size`` parameter can be used to choose size of facebook register button. You can use : small, medium, large or xlarge.
 
-     * **h.fbauth.register_button_custom(appid, text='Register with Facebook', scope=None, remember='', img_btn='')**
+* **h.fbauth.register_button_custom(appid, text='Register with Facebook', scope=None, remember='', img_btn='')**
         Places a registration button with custom image.
         Registration automatically creates a new user from its facebook data and logs him in.
         *For registration to work it is required that any additional data apart the data which
@@ -136,7 +136,7 @@ your users log into your application using FaceBook Connect:
 
         The ``img_btn`` parameter specific custom url image button.
 
-     * **h.fbauth.connect_button(appid, text='Connect your Facebook account', scope=None, size='medium')**
+* **h.fbauth.connect_button(appid, text='Connect your Facebook account', scope=None, size='medium')**
         Places a connect account button.
         Connect permits to associate an already existing user to a facebook account so that
         it can later log with its facebook account.
@@ -154,7 +154,7 @@ your users log into your application using FaceBook Connect:
 
         The ``size`` parameter can be used to choose size of facebook login button. You can use : small, medium, large or xlarge.
 
-     * **h.fbauth.connect_button_custom(appid, text='Connect your Facebook account', scope=None, img_btn='')**
+* **h.fbauth.connect_button_custom(appid, text='Connect your Facebook account', scope=None, img_btn='')**
         Places a connect account button.
         Connect permits to associate an already existing user to a facebook account so that
         it can later log with its facebook account.
@@ -178,15 +178,15 @@ Available Hooks
 FBAuth exposes some hooks to alter its behavior, 
 the hooks that can be used with TurboGears2 *register_hook* are:
 
-    * **fbauth.on_registration(facebook_data, user)** -> Runs when it is registering a new user from facebook login, permits to add additional data to the user.
-    * **fbauth.on_login(facebook_data, user)** -> Runs when it is logging in from facebook, permits to update/add additional data to the user.
+* **fbauth.on_registration(facebook_data, user)** -> Runs when it is registering a new user from facebook login, permits to add additional data to the user.
+* **fbauth.on_login(facebook_data, user)** -> Runs when it is logging in from facebook, permits to update/add additional data to the user.
 
 FBAuth Utilities
 ------------------
 
 FBAuth provides a bunch of utility methods that make easy to work with facebook:
 
-    * **fbauth.lib.has_fbtoken_expired(user)**
+* **fbauth.lib.has_fbtoken_expired(user)**
         Checks if the facebook token for the given users has expired or not, this can be
         useful when calling facebook API. The facebook token itself can be retrieved from
         ``user.fbauth.access_token``
