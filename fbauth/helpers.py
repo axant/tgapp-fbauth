@@ -16,7 +16,7 @@ def _fb_init(appid, html, script):
                      cookie     : true,
                      xfbml      : true,
                      oauth      : true,
-                     version    : 'v2.3'});
+                     version    : 'v2.10'});
         };
         (function() {
           var e = document.createElement('script'); e.async = true;
