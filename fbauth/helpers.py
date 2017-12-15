@@ -125,7 +125,7 @@ def fbauth_javascript_function_for_base_facebook_login(remember, request):
             window.location = loginUrl;
         }
     }
-    </script>''' % dict(remember=remember, came_from=request.GET.get('came_from', '/'))
+    </script>''' % dict(remember=remember, came_from=encode_url(request.GET.get('came_from', '/')))
 
 
 def fbauth_javascript_function_for_custom_facebook_login(scope):
@@ -157,7 +157,7 @@ function fbauth_register(fbanswer) {
         window.location = loginUrl;
     }
 }
-</script>''' % dict(remember=remember, came_from=request.GET.get('came_from', '/'))
+</script>''' % dict(remember=remember, came_from=encode_url(request.GET.get('came_from', '/')))
 
 
 def fbauth_javascript_function_for_custom_facebook_registration(scope):
@@ -186,7 +186,7 @@ function fbauth_connect(fbanswer) {
         window.location = loginUrl;
     }
 }
-</script>''' % dict(came_from=request.GET.get('came_from', '/'))
+</script>''' % dict(came_from=encode_url(request.GET.get('came_from', '/')))
 
 
 def fbauth_javascript_function_for_custom_facebook_connect(scope):
@@ -200,3 +200,11 @@ def fbauth_javascript_function_for_custom_facebook_connect(scope):
             });
         }
     </script>''' % dict(scope=scope)
+
+
+def encode_url(url):
+    try:
+        from urllib.parse import quote
+    except ImportError:
+        from urllib import quote
+    return quote(url, safe='')
