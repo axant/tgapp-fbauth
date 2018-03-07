@@ -1,8 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
-.pyc
-.swp
+*.pyc
+*.swp
 ^build
 ^dist
-.egg-info
+*.egg-info
 .idea
 .DS_Store

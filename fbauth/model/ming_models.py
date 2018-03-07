@@ -3,7 +3,7 @@
 from ming import schema as s
 from ming.odm import FieldProperty, RelationProperty, ForeignIdProperty
 from ming.odm.declarative import MappedClass
-from googleplusauth.model import DBSession
+from fbauth.model import DBSession
 
 
 class FBAuthInfo(MappedClass):
