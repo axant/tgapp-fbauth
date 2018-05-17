@@ -4,7 +4,7 @@
 
 from tg import request
 from markupsafe import Markup
-from urllib import quote_plus
+from six.moves.urllib.parse import quote_plus
 
 def _fb_init(appid, html, script):
     if appid:

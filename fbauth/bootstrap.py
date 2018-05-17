@@ -4,5 +4,11 @@
 from fbauth import model
 from tgext.pluggable import app_model
 
+import logging
+
+
+log = logging.getLogger(__name__)
+
+
 def bootstrap(command, conf, vars):
-    print 'Bootstrapping fbauth...'
+    log.info('Bootstrapping fbauth...')

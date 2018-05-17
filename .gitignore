@@ -2,7 +2,7 @@
 *.pyc
 *.swp
 ^build
-^dist
+dist/
 *.egg-info
 .idea
 .DS_Store

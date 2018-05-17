@@ -1,7 +1,6 @@
 import tg
 from datetime import datetime, timedelta
-from urlparse import urlparse, parse_qs, urlunparse
-from urllib import urlencode
+from six.moves.urllib.parse import urlparse, parse_qs, urlunparse, urlencode
 
 def redirect_on_fail():
     return tg.redirect(tg.request.referer or tg.config.sa_auth['post_logout_url'])

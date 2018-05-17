@@ -18,7 +18,7 @@ from fbauth.lib.utils import (login_user, has_fbtoken_expired, validate_token,
                               add_param_to_query_string, redirect_on_fail)
 
 import json
-from urllib import urlopen
+from six.moves.urllib.request import urlopen
 
 
 class RootController(TGController):
