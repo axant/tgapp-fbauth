@@ -21,7 +21,7 @@ def _fb_init(appid, html, script):
         (function() {
           var e = document.createElement('script'); e.async = true;
           e.src = document.location.protocol +
-            '//connect.facebook.net/en_US/all.js';
+            '//connect.facebook.net/en_US/sdk.js';
           document.getElementById('fb-root').appendChild(e);
         }());
         </script>''' % dict(appid=appid)
