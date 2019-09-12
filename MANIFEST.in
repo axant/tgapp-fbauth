@@ -1,4 +1,5 @@
 recursive-include fbauth/public *
 recursive-include fbauth/templates *.html
+recursive-include fbauth/migration *
 global-exclude *.pyc
 

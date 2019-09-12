@@ -190,3 +190,20 @@ FBAuth provides a bunch of utility methods that make easy to work with facebook:
         Checks if the facebook token for the given users has expired or not, this can be
         useful when calling facebook API. The facebook token itself can be retrieved from
         ``user.fbauth.access_token``
+
+UTF8 and Mysql
+------------------
+Mysql charset to use to be compliant with UTF8 is utf8mb4.
+If you already have an installation with latin-1 or utf8 as collation and you
+want to be compliant with the UTF8 standard you have to convert your database
+in order to use utf8mb4 as collation, and add ?charset=utf8mb4 to
+your connection string.
+And you have to launch the migration included from version 0.3.4 with command::
+
+    $ gearbox migrate-pluggable fbauth upgrade
+
+and to rollback::
+
+    $ gearbox migrate-pluggable fbauth downgrade
+
+For more info see https://github.com/TurboGears/tgext.pluggable#using-migrations
