@@ -19,7 +19,7 @@ class FBAuthInfo(DeclarativeBase):
     user_id = Column(Integer, ForeignKey(primary_key(app_model.User)), nullable=False)
     user = relation(app_model.User, backref=backref('fbauth', uselist=False, cascade='all, delete-orphan'))
 
-    facebook_id = Column(Unicode(255), nullable=False, index=True, unique=True)
+    facebook_id = Column(Unicode(191), nullable=False, index=True, unique=True)
     access_token = Column(Unicode(255), nullable=False)
     access_token_expiry = Column(DateTime, nullable=False)
 

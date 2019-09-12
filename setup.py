@@ -8,7 +8,7 @@ except ImportError:
     use_setuptools()
     from setuptools import setup, find_packages
 
-install_requires=[
+install_requires = [
     "TurboGears2 >= 2.3.0",
     "tgext.pluggable",
     "six",
